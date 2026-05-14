@@ -1,0 +1,25 @@
+ep011.service file content -> 
+
+[Unit]
+Description=EP011 Service
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu
+ExecStart=/home/ubuntu/start.sh
+Restart=on-failure
+Environment="AWS_DEFAULT_REGION=eu_north_1"
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
+
+location : sudo nano /etc/systemd/system/ep011.service
+
+
+enable the service and run as daemon -> 
+sudo systemctl daemon-reload
+sudo systemctl enable myscript.service
+sudo systemctl start myscript.service

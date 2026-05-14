@@ -1,0 +1,19 @@
+
+Node-red server installation..#
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+   sudo apt-get install -y nodejs build-essential
+   sudo npm install -g --unsafe-perm node-red
+
+
+start nodered automatically... 
+
+ sudo npm install -g --unsafe-perm pm2
+   pm2 start `which node-red` -- -v
+   pm2 save
+   pm2 startup
+
+
+node-red-contrib-aws
+node-red-node-mysql
+node-red-dashboard
+node-red-contrib-graphs
