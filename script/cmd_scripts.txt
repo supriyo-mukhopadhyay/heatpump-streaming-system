@@ -1,0 +1,23 @@
+//setup env for terraform 
+source scripts/setup.sh
+
+// copy transformation scripts to s3
+!aws s3 cp ./terraform/assets/de-c3w2-reviews-transform-job.py s3://{SCRIPTS_BUCKET_NAME}/de-c3w2-reviews-transform-job.py
+!aws s3 cp ./terraform/assets/de-c3w2-metadata-transform-job.py s3://{SCRIPTS_BUCKET_NAME}/de-c3w2-metadata-transform-job.py
+
+//terraform activities, in output we should get glue role, glue job names
+cd terraform
+terraform init
+terraform plan
+terraform apply || echo "$?"
+
+//run the glue jobs for both the scripts
+aws glue start-job-run --job-name <GLUE-JOB-NAME> | jq -r '.JobRunId' 
+
+
+//install aws glue for python 
+# Source - https://stackoverflow.com/a/78896089
+# Posted by Andrei Micu
+# Retrieved 2026-04-12, License - CC BY-SA 4.0
+
+pip3 install git+https://github.com/awslabs/aws-glue-libs.git
